@@ -85,4 +85,13 @@ class SAP
 
         return $function->invoke($param);
     }
+
+    /**
+     * Print HU
+     * @return array
+     */
+    public function HU_PROCESS_MSG_DIRECT() : array
+    {
+        return $this->connection->getFunction("BAPI_HU_PROCESS_MSG_DIRECT")->invoke();
+    }
 }
