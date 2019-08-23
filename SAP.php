@@ -40,7 +40,7 @@ class SAP
      * @param $rows int Amount of rows to return
      * @return array Data
      */
-    public function RFC_READ_TABLE($table, $fields, $options, $rows)
+    public function RFC_READ_TABLE(string $table, string $fields, string $options, string $rows) : array
     {
         $param = array();
 
@@ -68,5 +68,21 @@ class SAP
         return $function->invoke($param);
     }
 
-    //TODO ABAP_RUN
+    /**
+     * Get Details of a ProcessOrder
+     * @param int $order ProcessOrder
+     * @return array
+     */
+    public function PROCESSORDER_READ(int $order) : array
+    {
+        $param = array();
+
+        $function = $this->connection->getFunction("BAPI_PROCORD_GET_DETAIL");
+
+        $function->setParameterActive("NUMBER", true);
+        //order number needs be 12 chars long so we need to fill up with zero's
+        $param["NUMBER"] = str_pad($order, 12, "0", STR_PAD_LEFT);
+
+        return $function->invoke($param);
+    }
 }
