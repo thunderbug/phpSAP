@@ -87,11 +87,17 @@ class SAP
     }
 
     /**
-     * Print HU
+     * Print HU Label
+     * @param string $output PrinterName
      * @return array
      */
-    public function HU_PROCESS_MSG_DIRECT() : array
+    public function HU_PROCESS_MSG_DIRECT(string $output) : array
     {
-        return $this->connection->getFunction("BAPI_HU_PROCESS_MSG_DIRECT")->invoke();
+        $param = array();
+        $function = $this->connection->getFunction("BAPI_HU_PROCESS_MSG_DIRECT");
+        $function->setParameterActive("DYNAMICOUTPUTDEVICE", true);
+        $param["DYNAMICOUTPUTDEVICE"] = $output;
+
+        return $function->invoke($param);
     }
 }
