@@ -20,6 +20,7 @@ class SAP
     public function __construct()
     {
         require_once ("SAPconfig.php");
+        require_once ("OrderObject.php");
 
         $config = array(
             "ashost" => SAPconfig::$host,
@@ -71,15 +72,38 @@ class SAP
     /**
      * Get Details of a ProcessOrder
      * @param int $order ProcessOrder
+     * @param OrderObject $object
      * @return array
      */
-    public function PROCESSORDER_READ(int $order) : array
+    public function PRODUCTION_ORDER_READ(int $order, OrderObject $object) : array
     {
         $param = array();
 
         $function = $this->connection->getFunction("BAPI_PROCORD_GET_DETAIL");
 
         $function->setParameterActive("NUMBER", true);
+        $function->setParameterActive("ORDER_OBJECTS", true);
+
+        //order number needs be 12 chars long so we need to fill up with zero's
+        $param["NUMBER"] = str_pad($order, 12, "0", STR_PAD_LEFT);
+        $param["ORDER_OBJECTS"] = $object->get();
+
+        return $function->invoke($param);
+    }
+
+    /**
+     * Get Details of a ProcessOrder
+     * @param int $order ProcessOrder
+     * @return array
+     */
+    public function PRODUCTION_ORDER_CHANGE(int $order) : array
+    {
+        $param = array();
+
+        $function = $this->connection->getFunction("BAPI_PRODORD_CHANGE");
+
+        $function->setParameterActive("NUMBER", true);
+
         //order number needs be 12 chars long so we need to fill up with zero's
         $param["NUMBER"] = str_pad($order, 12, "0", STR_PAD_LEFT);
 
