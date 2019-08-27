@@ -3,7 +3,10 @@
 
 namespace SAP;
 
-
+/**
+ * Class OrderObject
+ * @package SAP
+ */
 class OrderObject
 {
     const HEADER = "HEADER";

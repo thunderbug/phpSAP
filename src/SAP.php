@@ -16,20 +16,28 @@ class SAP
 
     /**
      * SAP constructor.
+     * @param string $host SAP Host
+     * @param string $sysnr System number
+     * @param string $client Client number
+     * @param string $user username
+     * @param string $password password
+     * @param bool $debug
      */
-    public function __construct()
+    public function __construct(string $host, string $sysnr, string $client, string $user, string $password, bool $debug = false)
     {
-        require_once ("SAPconfig.php");
-        require_once ("OrderObject.php");
+        require_once("Structure/OrderObject.php");
 
         $config = array(
-            "ashost" => SAPconfig::$host,
-            "sysnr" => SAPconfig::$systemnr,
-            "client" => SAPconfig::$client,
-            "user" => SAPconfig::$username,
-            "passwd" => SAPconfig::$password,
-            "trace" => SAPconfig::$trace
+            "ashost" => $host,
+            "sysnr" => $sysnr,
+            "client" => $client,
+            "user" => $user,
+            "passwd" => $password
         );
+
+        if($debug) {
+            $config["trace"] = Connection::TRACE_LEVEL_FULL;
+        }
 
         $this->connection = new Connection($config);
     }
@@ -41,7 +49,7 @@ class SAP
      * @param $rows int Amount of rows to return
      * @return array Data
      */
-    public function RFC_READ_TABLE(string $table, string $fields, string $options, string $rows) : array
+    public function RFC_READ_TABLE(string $table, array $fields, string $options, int $rows) : array
     {
         $param = array();
 

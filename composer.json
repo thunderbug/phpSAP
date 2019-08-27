@@ -1,0 +1,20 @@
+{
+  "name": "thunderbug/phpSAP",
+  "description": "Simplify SAP Access",
+  "keywords": [""],
+  "homepage": "https://github.com/thunderbug/phpSAP",
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "Wim Fertons",
+    "email": "info@thunderbug.be",
+    "homepage": "thunderbug.be"
+  }],
+
+  "require": {
+    "php": "^7.2"
+  },
+  "autoload": {
+    "psr-4": { "SAP\\": "src" }
+  }
+}
