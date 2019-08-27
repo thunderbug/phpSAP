@@ -26,3 +26,4 @@
 
 /.idea/*
 /SAPstub.php
+composer.lock

@@ -8,7 +8,7 @@
   "authors": [{
     "name": "Wim Fertons",
     "email": "info@thunderbug.be",
-    "homepage": "thunderbug.be"
+    "homepage": "http://thunderbug.be"
   }],
 
   "require": {
@@ -16,5 +16,6 @@
   },
   "autoload": {
     "psr-4": { "SAP\\": "src" }
-  }
+  },
+  "minimum-stability": "stable"
 }
