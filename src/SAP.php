@@ -9,6 +9,15 @@ use SAPNWRFC\Connection;
  */
 class SAP
 {
+    const HEADER = "HEADER";
+    const POSITIONS = "POSITIONS";
+    const SEQUENCES = "SEQUENCES";
+    const PHASES = "PHASES";
+    const COMPONENTS = "COMPONENTS";
+    const PROD_REL_TOOLS = "PROD_REL_TOOLS";
+    const TRIGGER_POINTS = "TRIGGER_POINTS";
+    const SECONDARY_RESOURCES = "SECONDARY_RESOURCES";
+
     /**
      * @var Connection SAPconnection
      */
@@ -25,8 +34,6 @@ class SAP
      */
     public function __construct(string $host, string $sysnr, string $client, string $user, string $password, bool $debug = false)
     {
-        require_once("Structure/OrderObject.php");
-
         $config = array(
             "ashost" => $host,
             "sysnr" => $sysnr,
@@ -80,10 +87,10 @@ class SAP
     /**
      * Get Details of a ProcessOrder
      * @param int $order ProcessOrder
-     * @param OrderObject $object
+     * @param array $object
      * @return array
      */
-    public function PRODUCTION_ORDER_READ(int $order, OrderObject $object) : array
+    public function PRODUCTION_ORDER_READ(int $order, array $object) : array
     {
         $param = array();
 
@@ -94,7 +101,7 @@ class SAP
 
         //order number needs be 12 chars long so we need to fill up with zero's
         $param["NUMBER"] = str_pad($order, 12, "0", STR_PAD_LEFT);
-        $param["ORDER_OBJECTS"] = $object->get();
+        $param["ORDER_OBJECTS"] = $object;
 
         return $function->invoke($param);
     }
