@@ -1,5 +1,5 @@
 {
-  "name": "thunderbug/phpSAP",
+  "name": "thunderbug/php-sap",
   "type": "library",
   "description": "A simple interface between SAP & PHP Using the php7-sapnwrfc library",
   "keywords": ["php", "SAP", "thunderbug", "phpSAP"],
