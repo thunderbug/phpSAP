@@ -1,21 +1,16 @@
 {
   "name": "thunderbug/phpSAP",
-  "description": "Simplify SAP Access",
-  "keywords": [""],
-  "homepage": "https://github.com/thunderbug/phpSAP",
   "type": "library",
+  "description": "A simple interface between SAP & PHP Using the php7-sapnwrfc library",
+  "keywords": ["php", "SAP", "thunderbug", "phpSAP"],
+  "homepage": "http://thunderbug.be",
   "license": "MIT",
-  "authors": [{
-    "name": "Wim Fertons",
-    "email": "info@thunderbug.be",
-    "homepage": "http://thunderbug.be"
-  }],
-
-  "require": {
-    "php": "^7.2"
-  },
-  "autoload": {
-    "psr-4": { "SAP\\": "src" }
-  },
-  "minimum-stability": "stable"
+  "authors": [
+    {
+      "name": "Wim F.",
+      "email": "info@thunderbug.be",
+      "homepage": "http://thunderbug.be",
+      "role": "Developer"
+    }
+  ]
 }
