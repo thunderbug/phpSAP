@@ -87,10 +87,9 @@ class SAP
     /**
      * Get Details of a ProcessOrder
      * @param int $order ProcessOrder
-     * @param array $object
      * @return array
      */
-    public function PRODUCTION_ORDER_READ(int $order, array $object) : array
+    public function PRODUCTION_ORDER_READ(int $order)
     {
         $param = array();
 
@@ -98,44 +97,37 @@ class SAP
 
         $function->setParameterActive("NUMBER", true);
         $function->setParameterActive("ORDER_OBJECTS", true);
-
         //order number needs be 12 chars long so we need to fill up with zero's
         $param["NUMBER"] = str_pad($order, 12, "0", STR_PAD_LEFT);
-        $param["ORDER_OBJECTS"] = $object;
+        $param["ORDER_OBJECTS"] =
+            array(
+                "HEADER" => "X",
+                "POSITIONS" => "X",
+                "SEQUENCES" => "X",
+                "PHASES" => "X",
+                "COMPONENTS" => "X",
+                "PROD_REL_TOOLS" => "X",
+                "TRIGGER_POINTS" => "X",
+                "SECONDARY_RESOURCES" => "X"
+            );
 
         return $function->invoke($param);
     }
 
     /**
-     * Get Details of a ProcessOrder
-     * @param int $order ProcessOrder
+     * Print a certain HU Label
+     * @param string $handlingunit HU number
+     * @param string $output OutputDevice
      * @return array
      */
-    public function PRODUCTION_ORDER_CHANGE(int $order) : array
-    {
-        $param = array();
-
-        $function = $this->connection->getFunction("BAPI_PRODORD_CHANGE");
-
-        $function->setParameterActive("NUMBER", true);
-
-        //order number needs be 12 chars long so we need to fill up with zero's
-        $param["NUMBER"] = str_pad($order, 12, "0", STR_PAD_LEFT);
-
-        return $function->invoke($param);
-    }
-
-    /**
-     * Print HU Label
-     * @param string $output PrinterName
-     * @return array
-     */
-    public function HU_PROCESS_MSG_DIRECT(string $output) : array
+    public function HU_PRINT(string $handlingunit, string $output) : array
     {
         $param = array();
         $function = $this->connection->getFunction("BAPI_HU_PROCESS_MSG_DIRECT");
         $function->setParameterActive("DYNAMICOUTPUTDEVICE", true);
-        $param["DYNAMICOUTPUTDEVICE"] = $output;
+        $function->setParameterActive("HUKEY", true);
+        $param["DYNAMICOUTPUTDEVICE"] = array("OUTPUT_DEVICE" => $output);
+        $param["HUKEY"] = array(array("HU_EXID" => str_pad($handlingunit, 20, "0", STR_PAD_LEFT)));
 
         return $function->invoke($param);
     }
